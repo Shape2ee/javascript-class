@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input,
+button {
+  padding: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(4, calc(25% - 9px));
+  width: 50%;
+  /* overflow: hidden; */
+}
+
+.grid #operator {
+  grid-column: 2 / span 3;
+}
+
+.grid #result {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.grid .row {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  height: 10vh;
+}
