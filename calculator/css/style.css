@@ -1,14 +1,11 @@
 @charset "utf-8";
 
-body {
-  width: 100%;
-  height: 100vh;
-}
-
 main {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
 input,
@@ -19,20 +16,21 @@ button {
 .grid {
   display: grid;
   gap: 12px;
-  margin: 0 auto;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 80px);
   grid-template-columns: repeat(4, calc(25% - 9px));
   width: 50%;
-  /* overflow: hidden; */
+  max-width: 300px;
 }
 
 .grid #operator {
-  grid-column: 2 / span 3;
+  grid-column: 1 / span 1;
+  text-align: center;
 }
 
 .grid #result {
-  grid-column: 1 / span 1;
-  grid-row: 1 / span 1;
+  grid-column: 2 / span 3;
+  padding: 10px;
+  text-align: right;
 }
 
 .grid .row {
@@ -40,5 +38,4 @@ button {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  height: 10vh;
 }
