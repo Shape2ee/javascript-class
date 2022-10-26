@@ -8,11 +8,6 @@ main {
   height: 100vh;
 }
 
-input,
-button {
-  padding: 0;
-}
-
 .grid {
   display: grid;
   gap: 12px;
