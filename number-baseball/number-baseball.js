@@ -40,10 +40,28 @@ $form.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = $input.value;
   $input.value = "";
-  if (checkInput(value)) {
-    // 입력값 문제 없음
-    tries.push(value);
-  } else {
+  if (!checkInput(value)) {
     // 에러있음
+    return;
   }
+
+  // 입력값 문제 없음
+
+  if (answer.join("") === value) {
+    // join() 배열을 문자열로 바꿔주는 함수
+    // 예시 [1, 2, 4, 7] -> "1,2,4,7"
+    // join("") 함수에 ""를 넣어주면 -> "1247"
+    // 반대로 split()는 문자열을 배열로 변경
+
+    $logs.textContent = "홈런!";
+    return;
+  }
+
+  if (tries.length >= 9) {
+    const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
+    $logs.appendChild(message);
+    return;
+  }
+
+  tries.push(value);
 });
