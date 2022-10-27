@@ -90,12 +90,14 @@ const onSubmit = (event) => {
     }
   }
   if (strike === 0 && ball === 0) {
+    out += 1;
+
     const $out = document.createElement("span");
-    $out.textContent = "아웃!";
+    $out.textContent = out + "아웃!";
     $out.style.color = "red";
+
     $li.append(`${value} : `, $out);
     $logs.append($li);
-    out += 1;
   } else {
     const $strike = document.createElement("span");
     const $ball = document.createElement("span");
