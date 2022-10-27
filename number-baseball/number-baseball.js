@@ -37,6 +37,7 @@ function checkInput(input) {
 }
 
 let out = 0;
+const $li = document.createElement("li");
 
 function defeated() {
   const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
@@ -92,12 +93,12 @@ const onSubmit = (event) => {
     const $out = document.createElement("span");
     $out.textContent = "아웃!";
     $out.style.color = "red";
-    $logs.append(`${value} : ${$out}`, document.createElement("br"));
+    $li.append(`${value} : `, $out);
+    $logs.append($li);
     out += 1;
   } else {
     const $strike = document.createElement("span");
     const $ball = document.createElement("span");
-    const $li = document.createElement("li");
 
     $strike.style.color = "orange";
     $ball.style.color = "green";
