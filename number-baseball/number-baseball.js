@@ -36,7 +36,15 @@ function checkInput(input) {
   return true;
 }
 
-$form.addEventListener("submit", (event) => {
+let out = 0;
+
+function defeated() {
+  const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
+  $logs.appendChild(message);
+  $form.removeEventListener("submit", onSubmit);
+}
+
+const onSubmit = (event) => {
   event.preventDefault();
   const value = $input.value;
   $input.value = "";
@@ -53,15 +61,59 @@ $form.addEventListener("submit", (event) => {
     // join("") 함수에 ""를 넣어주면 -> "1247"
     // 반대로 split()는 문자열을 배열로 변경
 
-    $logs.textContent = "홈런!";
+    const $homrun = document.createElement("span");
+    $homrun.textContent = "홈런!";
+    $homrun.style.color = "blue";
+    $logs.append($homrun);
     return;
   }
 
   if (tries.length >= 9) {
-    const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
-    $logs.appendChild(message);
+    defeated();
+    return;
+  }
+
+  // 볼, 스트라이크 검사하기
+  let strike = 0;
+  let ball = 0;
+  for (let i = 0; i < answer.length; i++) {
+    const index = value.indexOf(answer[i]);
+    if (index > -1) {
+      // 일치하는 숫자 발견
+      if (index === i) {
+        // 자릿수도 같으면
+        strike += 1;
+      } else {
+        ball += 1;
+      }
+    }
+  }
+  if (strike === 0 && ball === 0) {
+    const $out = document.createElement("span");
+    $out.textContent = "아웃!";
+    $out.style.color = "red";
+    $logs.append(`${value} : ${$out}`, document.createElement("br"));
+    out += 1;
+  } else {
+    const $strike = document.createElement("span");
+    const $ball = document.createElement("span");
+    const $li = document.createElement("li");
+
+    $strike.style.color = "orange";
+    $ball.style.color = "green";
+    $strike.textContent = strike;
+    $ball.textContent = ball;
+
+    $li.append(`${value} : `, $strike, `스트라이크 `, $ball, `볼`);
+    $logs.append($li);
+  }
+
+  if (out === 3) {
+    defeated();
     return;
   }
 
   tries.push(value);
-});
+};
+
+$form.addEventListener("submit", onSubmit);
