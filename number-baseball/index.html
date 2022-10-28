@@ -18,11 +18,12 @@
   </head>
   <body>
     <main>
-      <section id="board">
-        <h1 class="title">숫자야구!</h1>
+      <div id="board">
+        <h1 class="title"><span class="blind">숫자야구!</span></h1>
         <div class="answer"></div>
-      </section>
-      <section id="container">
+      </div>
+      <div id="container">
+        <h2 class="blind">답입력칸</h2>
         <ul class="ball_area">
           <li class="ball"></li>
           <li class="ball"></li>
@@ -33,7 +34,7 @@
           <input type="text" id="input" required />
           <button type="submit">확인</button>
         </form>
-      </section>
+      </div>
       <ul id="logs"></ul>
     </main>
 

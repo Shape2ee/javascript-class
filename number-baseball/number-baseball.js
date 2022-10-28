@@ -7,8 +7,8 @@ const $answer = document.querySelector(".answer");
 
 // const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const numbers = [];
-for (let n = 0; n < 9; n++) {
-  numbers.push(n + 1);
+for (let n = 0; n < 10; n++) {
+  numbers.push(n);
 }
 
 const answer = [];
@@ -39,18 +39,17 @@ function checkInput(input) {
 }
 
 let out = 0;
-const $li = document.createElement("li");
 
 function defeated() {
   const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
-  $logs.appendChild(message);
-  $form.removeEventListener("submit", onSubmit);
+  $answer.appendChild(message);
 }
 
 const onSubmit = (event) => {
   event.preventDefault();
   const value = $input.value;
   $input.value = "";
+  $answer.textContent = "";
   if (!checkInput(value)) {
     // 에러있음
     return;
@@ -70,8 +69,7 @@ const onSubmit = (event) => {
 
     const $homrun = document.createElement("span");
     $homrun.textContent = "홈런!";
-    $homrun.style.color = "blue";
-    $logs.append($homrun);
+    $answer.append($homrun);
     return;
   }
 
@@ -99,22 +97,29 @@ const onSubmit = (event) => {
     out += 1;
 
     const $out = document.createElement("span");
+    const $li = document.createElement("li");
+
     $out.textContent = out + "아웃!";
     $out.style.color = "red";
 
-    $li.append(`${value} : `, $out);
+    $li.append(`${value} `, $out);
     $logs.append($li);
+
+    $answer.append(`${out} 아웃!`);
   } else {
     const $strike = document.createElement("span");
     const $ball = document.createElement("span");
+    const $li = document.createElement("li");
 
     $strike.style.color = "orange";
     $ball.style.color = "green";
-    $strike.textContent = strike;
-    $ball.textContent = ball;
+    $strike.textContent = strike + "S";
+    $ball.textContent = ball + "B";
 
-    $li.append(`${value} : `, $strike, `스트라이크 `, $ball, `볼`);
+    $li.append(`${value} `, $strike, " ", $ball);
     $logs.append($li);
+
+    $answer.append(`${strike} 스트라이크 ${ball} 볼`);
   }
 
   if (out === 3) {
