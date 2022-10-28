@@ -32,3 +32,26 @@ main {
   width: 500px;
   font-size: 5rem;
 }
+
+/* container */
+#container {
+  margin-top: 100px;
+}
+
+#container .ball_area {
+  /* background-color: #5272a5; */
+  display: flex;
+  justify-content: center;
+}
+
+#container .ball {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  width: 140px;
+  height: 140px;
+  background: url(./images/ball.png) no-repeat center / cover;
+  font-size: 8rem;
+  font-weight: 700;
+}

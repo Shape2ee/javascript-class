@@ -2,6 +2,8 @@ const $form = document.querySelector("#form");
 const $input = document.querySelector("#input");
 const $button = document.querySelector("#button");
 const $logs = document.querySelector("#logs");
+const $$ball = document.querySelectorAll(".ball");
+const $answer = document.querySelector(".answer");
 
 // const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const numbers = [];
@@ -53,7 +55,11 @@ const onSubmit = (event) => {
     // 에러있음
     return;
   }
+  const inputList = value.split("");
 
+  for (let i = 0; i < $$ball.length; i++) {
+    $$ball[i].textContent = inputList[i];
+  }
   // 입력값 문제 없음
 
   if (answer.join("") === value) {
