@@ -6,10 +6,18 @@ const $$ball = document.querySelectorAll(".ball");
 const $answer = document.querySelector(".answer");
 
 // const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const numbers = [];
-for (let n = 0; n < 10; n++) {
-  numbers.push(n);
-}
+// const numbers = [];
+// for (let n = 0; n < 10; n++) {
+//   numbers.push(n);
+// }
+
+const numbers = Array(10)
+  .fill(0)
+  .map((element, idx) => {
+    return (element = idx);
+  });
+
+console.log(numbers);
 
 const answer = [];
 for (let i = 0; i < 4; i++) {
