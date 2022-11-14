@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>반응속도 체크하기</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      #screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        font-size: 3rem;
+        text-align: center;
+        color: #fff;
+      }
+
+      #screen.waiting {
+        background-color: #1982c4;
+      }
+
+      #screen.ready {
+        background-color: #ff595e;
+      }
+
+      #screen.now {
+        background-color: #8ac926;
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="screen" class="waiting">클릭하고 시작하세요!</div>
+    <div id="result"></div>
+
+    <script src="./response_check.js"></script>
+  </body>
+</html>
