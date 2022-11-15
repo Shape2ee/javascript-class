@@ -7,3 +7,4 @@
 - [숫자야구](https://shape2ee.github.io/javascript-class/number-baseball/index.html)
 - [로또 게임](https://shape2ee.github.io/javascript-class/lotto/index.html)
 - [가위바위보 게임](https://shape2ee.github.io/javascript-class/rsp-game/index.html)
+- [반응속도 체크하기](https://shape2ee.github.io/javascript-class/response-check/index.html)
