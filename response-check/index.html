@@ -12,6 +12,7 @@
 
       #screen {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
@@ -33,11 +34,19 @@
         background-color: #8ac926;
         color: #000;
       }
+
+      #result {
+        margin-top: 30px;
+        font-size: 2rem;
+      }
     </style>
   </head>
   <body>
-    <div id="screen" class="waiting">클릭하고 시작하세요!</div>
-    <div id="result"></div>
+    <div id="screen" class="waiting">
+      <div id="title">클릭하고 시작하세요!</div>
+      <div id="result"></div>
+      <ul id="rank"></ul>
+    </div>
 
     <script src="./response_check.js"></script>
   </body>
