@@ -15,16 +15,8 @@ const rows = [];
 // ]
 
 const checkWinner = (target) => {
-  let rowIndex;
-  let cellIndex;
-  rows.forEach((row, ri) => {
-    row.forEach((cell, ci) => {
-      if (cell === target) {
-        rowIndex = ri;
-        cellIndex = ci;
-      }
-    });
-  });
+  const rowIndex = target.parentNode.rowIndex;
+  const cellIndex = target.cellIndex;
 
   // 세 칸 다 채워졌나?
   let hasWinner = false;
@@ -85,14 +77,16 @@ const onCheckCells = (event) => {
   }
 
   // 무승부 검사
-  let draw = true;
+  // 모두 차있으면 true, 아니면 false
+  const draw = rows.flat().every((cell) => cell.textContent);
+  /* let draw = true;
   rows.forEach((row) => {
     row.forEach((cell) => {
       if (!cell.textContent) {
         draw = false;
       }
     });
-  });
+  }); */
   if (draw) {
     $result.textContent = `무승부입니다.`;
     return;
