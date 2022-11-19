@@ -59,17 +59,10 @@ const checkWinner = (target) => {
   return hasWinner;
 };
 
-const onCheckCells = (event) => {
-  // 칸에 글자가 있나?
-  if (event.target.textContent !== "") {
-    console.log("빈칸이 아닙니다");
-    return;
-  }
-  console.log("빈칸입니다.");
-  event.target.textContent = turn;
-
+const checkWinnerAndDrew = (target) => {
+  const hasWinner = checkWinner(target);
   // 승부확인
-  if (checkWinner(event.target)) {
+  if (hasWinner) {
     console.log("승리");
     $result.textContent = `${turn}님이 승리입니다.`;
     $table.removeEventListener("click", onCheckCells);
@@ -80,26 +73,56 @@ const onCheckCells = (event) => {
   // 모두 차있으면 true, 아니면 false
   const draw = rows.flat().every((cell) => cell.textContent);
   /* let draw = true;
-  rows.forEach((row) => {
-    row.forEach((cell) => {
-      if (!cell.textContent) {
-        draw = false;
-      }
-    });
-  }); */
+    rows.forEach((row) => {
+      row.forEach((cell) => {
+        if (!cell.textContent) {
+          draw = false;
+        }
+      });
+    }); */
   if (draw) {
     $result.textContent = `무승부입니다.`;
     return;
   }
 
+  // 턴을 넘긴다
   turn = turn === "O" ? "X" : "O";
+  // changeTurn();
   /* 
-  if (turn === "O") {
-    turn = "X";
-  } else if (turn === "X") {
-    turn = "O";
+    if (turn === "O") {
+      turn = "X";
+    } else if (turn === "X") {
+      turn = "O";
+    }
+    */
+};
+
+let clickable = true;
+const onCheckCells = (event) => {
+  if (!clickable) return;
+  // 칸에 글자가 있나?
+  if (event.target.textContent !== "") {
+    console.log("빈칸이 아닙니다");
+    return;
   }
-  */
+  console.log("빈칸입니다.");
+  event.target.textContent = turn;
+
+  // 승부판단하기
+  checkWinnerAndDrew(event.target);
+
+  if (turn === "X") {
+    clickable = false;
+    setTimeout(() => {
+      const emptyCells = rows.flat().filter((v) => !v.textContent);
+      const randomCells =
+        emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      randomCells.textContent = turn;
+      console.log(randomCells);
+      checkWinnerAndDrew(randomCells);
+      clickable = true;
+    }, 1000);
+  }
 };
 
 // 이차원 배열 이용하기
@@ -136,7 +159,7 @@ c = 'hi';
 d = 'wow';
 
 2. 
-const = obj = {
+const obj = {
   a: 'hello',
   b: {
     d: { e : 'wow },
