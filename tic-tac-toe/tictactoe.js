@@ -113,12 +113,13 @@ const onCheckCells = (event) => {
 
   if (turn === "X") {
     clickable = false;
+
     setTimeout(() => {
       const emptyCells = rows.flat().filter((v) => !v.textContent);
       const randomCells =
         emptyCells[Math.floor(Math.random() * emptyCells.length)];
       randomCells.textContent = turn;
-      console.log(randomCells);
+
       checkWinnerAndDrew(randomCells);
       clickable = true;
     }, 1000);
