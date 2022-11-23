@@ -13,19 +13,21 @@ const $message = document.querySelector("#message");
 
 class Game {
   constructor(name) {
-    this.hero = new Hero(this, name);
+    this.hero = null;
     this.monster = null;
     this.monsterList = [
       { name: "슬라임", hp: 25, att: 10, xp: 10 },
       { name: "스켈레톤", hp: 50, att: 20, xp: 20 },
       { name: "마왕", hp: 150, att: 35, xp: 50 },
     ];
-    this.start();
+    this.start(name);
+    this.updateHeroStat();
   }
-  start() {
+  start(name) {
     $gameMenu.addEventListener("submit", this.onGameMenuInput);
     $battleMenu.addEventListener("submit", this.onBattleMenuInput);
     this.changeScreen("game");
+    this.hero = new Hero(this, name);
   }
   changeScreen(screen) {
     if (screen === "start") {
@@ -47,6 +49,17 @@ class Game {
     const input = event.target["menu-input"].value;
     if (input === "1") {
       this.changeScreen("battle");
+      const randomIndex = Math.floor(Math.random() * this.monsterList.length);
+      const randomMonster = this.monsterList[randomIndex];
+      this.monster = new Monster(
+        this,
+        randomMonster.name,
+        randomMonster.hp,
+        randomMonster.att,
+        randomMonster.xp
+      );
+      this.updateMonsterStat();
+      this.showMessage(`몬스터 ${this.monster.name}를 마주쳤습니다`);
     } else if (input === "2") {
     } else if (input === "3") {
     }
@@ -59,6 +72,39 @@ class Game {
     } else if (input === "3") {
     }
   };
+  updateHeroStat() {
+    const { hero } = this;
+    if (hero === null) {
+      $heroName.textContent = "";
+      $heroLevel.textContent = "";
+      $heroHp.textContent = "";
+      $heroXp.textContent = "";
+      $heroAtt.textContent = "";
+      return;
+    }
+
+    $heroName.textContent = hero.name;
+    $heroLevel.textContent = `${hero.lev}Lev`;
+    $heroHp.textContent = `HP: ${hero.hp}/${hero.maxHp}`;
+    $heroXp.textContent = `XP: ${hero.xp}`;
+    $heroAtt.textContent = `ATT: ${hero.att}`;
+  }
+  updateMonsterStat() {
+    const { monster } = this;
+    if (monster === null) {
+      $monsterName.textContent = "";
+      $monsterHp.textContent = "";
+      $monsterAtt.textContent = "";
+      return;
+    }
+
+    $monsterName.textContent = monster.name;
+    $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
+    $monsterAtt.textContent = `ATT: ${monster.att}`;
+  }
+  showMessage(text) {
+    $message.textContent = text;
+  }
 }
 class Hero {
   constructor(game, name) {
