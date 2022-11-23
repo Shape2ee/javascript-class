@@ -61,7 +61,12 @@ class Game {
       this.updateMonsterStat();
       this.showMessage(`몬스터 ${this.monster.name}를 마주쳤습니다`);
     } else if (input === "2") {
+      this.hero.hp = this.hero.maxHp;
+      this.updateHeroStat();
+      this.showMessage(`${hero.name}이 휴식을 취했습니다.`);
     } else if (input === "3") {
+      this.showMessage(``);
+      this.quit();
     }
   };
   onBattleMenuInput = (event) => {
@@ -74,6 +79,7 @@ class Game {
 
       if (hero.hp <= 0) {
         this.showMessage(`${hero.name}가 죽었습니다.`);
+        1;
         this.quit();
       } else if (monster.hp <= 0) {
         this.showMessage(`${monster.xp} 경험치를 얻었습니다.`);
@@ -89,7 +95,16 @@ class Game {
       this.updateHeroStat();
       this.updateMonsterStat();
     } else if (input === "2") {
+      const { hero, monster } = this;
+      hero.hp = Math.min(hero.maxHp, hero.hp + 20);
+      monster.attack(hero);
+      this.updateHeroStat();
+      this.showMessage("체력을 조금 회복했습니다.");
     } else if (input === "3") {
+      this.changeScreen("game");
+      this.showMessage(`${this.monster.name}에게서 도망쳤습니다.`);
+      this.monster = null;
+      this.updateMonsterStat();
     }
   };
   updateHeroStat() {
@@ -136,22 +151,24 @@ class Game {
     game = null;
   }
 }
-class Hero {
-  constructor(game, name) {
+class Unit {
+  constructor(game, name, hp, att, xp) {
     this.game = game;
     this.name = name;
-    this.lev = 1;
-    this.maxHp = 100;
-    this.hp = 100;
-    this.xp = 0;
-    this.att = 10;
+    this.maxHp = hp;
+    this.hp = hp;
+    this.xp = xp;
+    this.att = att;
   }
   attack(target) {
     target.hp -= this.att;
   }
-  heal(monster) {
-    this.hp += 20;
-    this.hp -= monster.att;
+}
+
+class Hero extends Unit {
+  constructor(game, name) {
+    super(game, name, 100, 10, 0);
+    this.lev = 1;
   }
   getXp(xp) {
     this.xp += xp;
@@ -166,17 +183,9 @@ class Hero {
   }
 }
 
-class Monster {
+class Monster extends Unit {
   constructor(game, name, hp, att, xp) {
-    this.game = game;
-    this.name = name;
-    this.maxHp = hp;
-    this.hp = hp;
-    this.xp = xp;
-    this.att = att;
-  }
-  attack(target) {
-    target.hp -= this.att;
+    super(game, name, hp, att, xp);
   }
 }
 
