@@ -4,6 +4,8 @@ const total = 12;
 const colors = ["red", "orange", "yellow", "green", "white", "pink"];
 let colorCopy = colors.concat(colors);
 let shuffled = [];
+let clicked = [];
+let completed = [];
 
 function shuffle() {
   for (let i = 0; colorCopy.length > 0; i += 1) {
@@ -30,10 +32,40 @@ function createCard(i) {
   return $card;
 }
 
+function onClickCard() {
+  this.classList.toggle("flipped");
+  clicked.push(this);
+  if (clicked.length !== 2) {
+    return;
+  }
+
+  const firstCard =
+    clicked[0].querySelector(".card-back").style.backgroundColor;
+  const secondCard =
+    clicked[1].querySelector(".card-back").style.backgroundColor;
+  if (firstCard === secondCard) {
+    completed.push(clicked[0]);
+    completed.push(clicked[1]);
+    clicked = [];
+    if (completed.length !== total) {
+      return;
+    }
+    alert("축하합니다.");
+    return;
+  }
+
+  setTimeout(() => {
+    clicked[0].classList.remove("flipped");
+    clicked[1].classList.remove("flipped");
+    clicked = [];
+  }, 500);
+}
+
 function startGame() {
   shuffle();
   for (let i = 0; i < total; i++) {
     const card = createCard(i);
+    card.addEventListener("click", onClickCard);
     $wrapper.appendChild(card);
   }
 
