@@ -6,6 +6,8 @@ let colorCopy = colors.concat(colors);
 let shuffled = [];
 let clicked = [];
 let completed = [];
+let clickable = false;
+let startTime;
 
 function shuffle() {
   for (let i = 0; colorCopy.length > 0; i += 1) {
@@ -33,6 +35,9 @@ function createCard(i) {
 }
 
 function onClickCard() {
+  if (!clickable || completed.includes(this) || clicked[0] === this) {
+    return;
+  }
   this.classList.toggle("flipped");
   clicked.push(this);
   if (clicked.length !== 2) {
@@ -50,18 +55,34 @@ function onClickCard() {
     if (completed.length !== total) {
       return;
     }
-    alert("축하합니다.");
+    let endTime = new Date();
+
+    setTimeout(() => {
+      alert(`축하합니다.${(endTime - startTime) / 1000}초 걸렸습니다.`);
+      resetGame();
+    }, 1000);
+
     return;
   }
-
+  clickable = false;
   setTimeout(() => {
     clicked[0].classList.remove("flipped");
     clicked[1].classList.remove("flipped");
     clicked = [];
+    clickable = true;
   }, 500);
 }
 
+function resetGame() {
+  $wrapper.innerHTML = "";
+  colorCopy = colors.concat(colors);
+  shuffled = [];
+  completed = [];
+  startGame();
+}
+
 function startGame() {
+  clickable = false;
   shuffle();
   for (let i = 0; i < total; i++) {
     const card = createCard(i);
@@ -73,10 +94,14 @@ function startGame() {
     setTimeout(() => {
       card.classList.add("flipped");
     }, 1000 + 100 * index);
-
-    setTimeout(() => {
-      card.classList.remove("flipped");
-    }, 3000);
   });
+
+  setTimeout(() => {
+    document.querySelectorAll(".card").forEach((card) => {
+      card.classList.remove("flipped");
+    });
+    clickable = true;
+    startTime = new Date();
+  }, 3000);
 }
 startGame();
