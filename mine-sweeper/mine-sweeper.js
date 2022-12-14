@@ -79,6 +79,38 @@ function onRightClick(event) {
   }
 }
 
+function countMine(rowIndex, cellIndex) {
+  const mines = [CODE.MINE, CODE.QUESTION_MINE, CODE.FLAG_MINE];
+  let i = 0;
+  mines.includes(data[rowIndex - 1]?.[cellIndex - 1]) && i++;
+  mines.includes(data[rowIndex - 1]?.[cellIndex]) && i++;
+  mines.includes(data[rowIndex - 1]?.[cellIndex + 1]) && i++;
+  mines.includes(data[rowIndex][cellIndex - 1]) && i++;
+  mines.includes(data[rowIndex][cellIndex + 1]) && i++;
+  mines.includes(data[rowIndex + 1]?.[cellIndex - 1]) && i++;
+  mines.includes(data[rowIndex + 1]?.[cellIndex]) && i++;
+  mines.includes(data[rowIndex + 1]?.[cellIndex + 1]) && i++;
+
+  return i;
+}
+
+function onLeftClick(event) {
+  const target = event.target;
+  const rowIndex = target.parentNode.rowIndex;
+  const cellIndex = target.cellIndex;
+  const cellData = data[rowIndex][cellIndex];
+
+  if (cellData === CODE.NORMAL) {
+    const count = countMine(rowIndex, cellIndex);
+    target.textContent = count || "";
+    target.className = "opened";
+  } else if (cellData === CODE.MINE) {
+    alert("펑!!!");
+    return;
+  }
+  return;
+}
+
 function drawTable() {
   data = plantMine();
   data.forEach((row) => {
@@ -92,6 +124,7 @@ function drawTable() {
     });
     $tbody.append($tr);
     $tbody.addEventListener("contextmenu", onRightClick);
+    $tbody.addEventListener("click", onLeftClick);
   });
 }
 drawTable();
