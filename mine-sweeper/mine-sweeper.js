@@ -45,6 +45,40 @@ function plantMine() {
   }
   return data;
 }
+
+function changeClassName(target, status = "", txt = "") {
+  target.className = status;
+  target.textContent = txt;
+}
+
+function onRightClick(event) {
+  event.preventDefault();
+  const target = event.target;
+  const rowIndex = target.parentNode.rowIndex;
+  const cellIndex = target.cellIndex;
+  const cellData = data[rowIndex][cellIndex];
+  // console.log(cellData, rowIndex, cellIndex);
+  if (cellData === CODE.MINE) {
+    data[rowIndex][cellIndex] = CODE.QUESTION_MINE;
+    changeClassName(target, "question", "?");
+  } else if (cellData === CODE.QUESTION_MINE) {
+    data[rowIndex][cellIndex] = CODE.FLAG_MINE;
+    changeClassName(target, "flag", "!");
+  } else if (cellData === CODE.FLAG_MINE) {
+    data[rowIndex][cellIndex] = CODE.MINE;
+    changeClassName(target, "", "X");
+  } else if (cellData === CODE.NORMAL) {
+    data[rowIndex][cellIndex] = CODE.QUESTION;
+    changeClassName(target, "question", "?");
+  } else if (cellData === CODE.QUESTION) {
+    data[rowIndex][cellIndex] = CODE.FLAG;
+    changeClassName(target, "flag", "!");
+  } else if (cellData === CODE.FLAG) {
+    data[rowIndex][cellIndex] = CODE.NORMAL;
+    changeClassName(target);
+  }
+}
+
 function drawTable() {
   data = plantMine();
   data.forEach((row) => {
@@ -57,6 +91,7 @@ function drawTable() {
       $tr.append($td);
     });
     $tbody.append($tr);
+    $tbody.addEventListener("contextmenu", onRightClick);
   });
 }
 drawTable();
