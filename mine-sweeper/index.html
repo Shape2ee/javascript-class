@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>지뢰찾기</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        width: 20px;
+        height: 20px;
+        background-color: #888;
+        border: 1px solid #bbb;
+        text-align: center;
+        line-height: 20px;
+      }
+      td.opened {
+        background-color: white;
+      }
+      td.flag {
+        background-color: red;
+      }
+      td.question {
+        background-color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="table">
+      <tbody></tbody>
+    </table>
+
+    <div id="result"></div>
+    <script src="./mine-sweeper.js"></script>
+  </body>
+</html>
